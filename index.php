@@ -5,15 +5,15 @@
 require_once 'vendor/autoload.php';
 
 use Twilio\Rest\Client;
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 $messageID = "";
 // Find your Account Sid and Auth Token at twilio.com/console
 // and set the environment variables. See http://twil.io/secure
-$sid = "ACda0b7d4a21547992edea6907d34d4c41";
-$token = "c9dc0eb0e78acb22c29ed512ef6549d2";
 
 if(isset($_POST['send'])){
     if($_POST['phone-no'] != "" && $_POST['message'] != ""){
-        $twilio = new Client($sid, $token);
+        $twilio = new Client($_ENV['TWILIO_ACCOUNT_SID'], $_ENV['TWILIO_AUTH_TOKEN']);
     
         $message = $twilio->messages
                         ->create("+254" . $_POST['phone-no'], // to
